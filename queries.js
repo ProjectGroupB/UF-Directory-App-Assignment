@@ -7,6 +7,8 @@ var
     assert = require('assert'),
     json = require('./listings.json');
 mongoose.connect(config.db.uri);
+var database = mongoose.connection;
+database.on('error', console.error.bind(console, 'error connecting')); // added a connection error check
 
 var listing = mongoose.model('Listing', Listing.listingSchema);
 
@@ -28,7 +30,11 @@ var removeCable = function() {
     on cable TV. Since we live in the 21st century and most courses are now web based, go ahead
     and remove this listing from your database and log the document to the console. 
    */
+    listing.find({ code: 'CABL' }, function(err, name) {
+        if (err) throw err;
 
+        console.log(name);
+    });
 
     listing.findOneAndRemove({ code: 'CABL' }, function(err) {
         if (err) throw err;
@@ -44,7 +50,7 @@ var updatePhelpsMemorial = function() {
     log the updated document to the console. 
    */
 
-    listing.findOneAndUpdate({ name: 'Phelps Laboratory' }, { address: 'updated address' }, function(err, user) {
+    listing.findOneAndUpdate({ name: 'Phelps Laboratory' }, { address: '102 Phelps Lab Gainesville, FL 32611' }, function(err, user) {
         if (err) throw err;
 
         // Address updated

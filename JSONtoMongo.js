@@ -15,7 +15,7 @@ var fs = require('fs'),
 /* Connect to your database */
 mongoose.connect(config.db.uri);
 var database = mongoose.connection;
-database.on('error', console.error.bind(console, 'error connecting:')); // added a connection error check
+database.on('error', console.error.bind(console, 'error connecting')); // added a connection error check
 /*
  Instantiate a mongoose model for each listing object in the JSON file,
  and then save it to your Mongo database
